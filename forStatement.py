@@ -22,10 +22,10 @@ sum = 0
 #        continue
 #     sum = sum + i
 for i in scores:
-    if i>100 or i <0:
+    if i > 100 or i <0:
         print("skip", i)
         continue
-     sum = sum + i
+    sum = sum + i
 average = sum / len(scores)
 
 print("학생들의 점수 총합: ", sum)
