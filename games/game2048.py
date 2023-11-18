@@ -17,11 +17,12 @@ colors = {
     '2048': (0, 229, 255),
 }
 
-board= [[-1, -1, -1, -1],
+board= [[-1, 2, -1, -1],
          [-1, -1, -1, -1],
          [-1, -1, -1, -1],
          [-1, -1, -1, -1]]
 
+#화면 관련 설정
 size = (500, 500)
 screen = pygame.display.set_mode(size)
 
@@ -29,6 +30,20 @@ def initScreen():
     screen.fill(colors['white'])
     pygame.display.update()
 
+def addNewBlock():
+    canSet = False
+
+    while !canSet:
+        randomX = random.randint(0,3)
+        randomY = random.randint(0,3)
+
+        if board[randomX][randomY] == -1:
+            canSet = True
+
+    board[randomX][randomY]  = 2 if random.randint(1, 10) < 10 else 4
+
+
+#게임 진행 flag 변수
 isGameRunning = True
 
 def setEventListener():
@@ -37,8 +52,22 @@ def setEventListener():
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_q:
                 isGameRunning = False
-            else:
-                print("키보드 키 입력 이벤트가 감지됨")
+                return
+
+                def setEventListener():
+                    global isGameRunning
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYUP:
+                            if event.key == pygame.K_q:
+                                isGameRunning = False
+                            elif event == pygame.K_DOWN:
+                                print("아래")
+                            elif event == pygame.K_UP:
+                                print("위")
+                            elif event == pygame.K_RIGHT:
+                                print("오른쪽")
+                            elif event == pygame.K_LEFT:
+                                print("왼쪽")
 
 def drawDisplay():
     global screen
@@ -53,7 +82,11 @@ def drawDisplay():
         for j in range(4):
             x = (blockWidth + margin) * j + baseX
             y = (blockWidth + margin) * i + baseY
-            pygame.draw.rect(screen, colors['-1'], [x, y, blockHeight, blockWidth], 2)
+            data = str(board[i][j])
+            if data == '-1':
+               pygame.draw.rect(screen, colors[data], [x, y, blockHeight, blockWidth], 2)
+            else:
+             pygame.draw.rect(screen, colors[data], [x, y, blockHeight, blockWidth], 2)
 
         pygame.display.flip()
 
